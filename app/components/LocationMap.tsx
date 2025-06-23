@@ -3,11 +3,21 @@
 import { useEffect, useState } from 'react'
 import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
+import L from 'leaflet'
 
 interface LocationMapProps {
     onLocationSelect: (lat: number, lng: number) => void
     searchAddress?: string
 }
+
+const markerIcon = L.icon({
+    iconUrl: '/leaflet/marker-icon.png',
+    shadowUrl: '/leaflet/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41],
+})
 
 function LocationMarker({ onLocationSelect }: { onLocationSelect: (lat: number, lng: number) => void }) {
     const [position, setPosition] = useState<[number, number] | null>(null)
@@ -19,7 +29,7 @@ function LocationMarker({ onLocationSelect }: { onLocationSelect: (lat: number, 
     })
 
     return position === null ? null : (
-        <Marker position={position} />
+        <Marker position={position} icon={markerIcon} />
     )
 }
 
